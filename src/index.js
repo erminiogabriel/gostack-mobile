@@ -13,6 +13,14 @@ export default function App(){
     })
   }, []);
 
+  async function handleAddProject(){
+    const response = await api.post('/projects', {
+      title: `Novo projeto ${Date.now()}`,
+      owner: 'Gabriel Machado'
+    });
+    setProjects([...projects, response.data]);
+  }
+
 
   return (
   <>
@@ -29,7 +37,11 @@ export default function App(){
     <Text style={styles.project} key={project.id}>{project.title}</Text>
   ))}
   </View>*/}
-  <TouchableOpacity styles={styles.button}>
+  <TouchableOpacity 
+  activeOpacity={0.6} 
+  style={styles.button} 
+  onPress={handleAddProject}
+  >
     <Text style={styles.buttonText}>
       Adicionar Projeto
     </Text>
@@ -47,5 +59,17 @@ const styles = StyleSheet.create({
   project:{
     color: '#FFF',
     fontSize: 20,
+  },
+  button: {
+    backgroundColor: '#fff',
+    margin: 20,
+    height: 50,
+    borderRadius: 4,
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  buttonText: { 
+    fontWeight: 'bold',
+    fontSize: 16,
   }
 });
